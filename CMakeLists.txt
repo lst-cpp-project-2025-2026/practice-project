@@ -23,19 +23,6 @@ if (NOT raylib_FOUND)
     if (NOT raylib_POPULATED)
         set(FETCHCONTENT_QUIET NO)
         FetchContent_MakeAvailable(raylib)
-
-        # FIX FOR MINGW/WINDOWS CONFLICTS:
-        # Define these macros to prevent raylib's source code (like raudio.c)
-        # from conflicting with functions like CloseWindow and ShowCursor 
-        # defined in standard MinGW/Windows headers.
-        if (WIN32)
-            target_compile_definitions(raylib PRIVATE
-                NOGDI
-                NOUSER
-                NOMINMAX
-            )
-        endif()
-
     endif()
 endif()
 
@@ -44,7 +31,7 @@ endif()
 # Initialize a variable to hold extra required libraries
 set(PLATFORM_LIBS "")
 
-# If the target system is Windows (MSVC, MinGW, etc.)
+# If the target system is Windows (MSVC, etc.)
 if (WIN32)
     # On Windows, raylib needs explicit links to core system libraries
     list(APPEND PLATFORM_LIBS opengl32 gdi32 winmm)
