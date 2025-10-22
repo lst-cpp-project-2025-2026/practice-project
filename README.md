@@ -17,8 +17,8 @@ You need to install three essential tools. **Follow the instructions exactly.**
 1.  **Git Bash:** This provides the professional terminal commands needed for Git and Linux-style commands on Windows.
     *   **Install Git:** Download and run the installer from [git-scm.com](https://git-scm.com/download/win). Use all the default installation options.
     *   *Verification:* Open the **Git Bash** application and type `git --version`.
-2.  **MinGW (GCC Compiler):** This is the C++ compiler we will use. We assume you have this or another C++ compiler installed.
-    *   *Verification:* Open **Git Bash** and type `g++ --version`. If this shows a version number, you are set.
+2.  **MinGW (GCC Compiler):** This is the C++ compiler we will use.
+    *   *Verification:* Open **Git Bash** and type `g++ --version`. If this shows a version number, you are set. (If you installed MinGW via an installer like TDM-GCC, ensure its `bin` directory is in your system PATH).
 3.  **CMake:** This tool manages the building of our C++ project.
     *   **Install CMake:** Download the installer from [cmake.org/download](https://cmake.org/download/). **CRUCIAL STEP: When prompted, select the option: "Add CMake to the system PATH for all users."**
     *   *Verification:* Open **Git Bash** and type `cmake --version`.
@@ -27,37 +27,9 @@ You need to install three essential tools. **Follow the instructions exactly.**
 
 To simplify building directly within VS Code, install the **CMake Tools** extension.
 
-### Essential Setup: Configuring CMake Permanently (MUST DO)
-
-To prevent build errors, we must tell CMake to use your MinGW compiler every time you run it. We will do this by adding configuration lines to your Git Bash startup file (`.bashrc`).
-
-1.  **Open Git Bash.**
-2.  **Open the configuration file:** We will use the `nano` text editor to open your Git Bash settings file.
-    ```bash
-    nano ~/.bashrc
-    ```
-
-3.  **Add the Configuration Lines:** Scroll to the very bottom of the file (or press `Ctrl` + `V` several times). Add the following two lines on new, empty lines:
-
-    ```bash
-    # Setting C and CXX compilers for CMake auto-detection
-    export CC=gcc
-    export CXX=g++
-    ```
-
-4.  **Save and Exit:**
-    *   Press `Ctrl` + `O` (to Write Out/Save).
-    *   Press `Enter` to confirm the filename.
-    *   Press `Ctrl` + `X` (to Exit).
-
-5.  **Verify the Change:**
-    *   **Close the current Git Bash window.**
-    *   **Open a brand new Git Bash window.**
-    *   Run the following test command: `echo $CC`. If the output is `gcc`, the setting worked!
-
 ### Build Steps: Running the Existing Code
 
-Once your environment is configured (Steps 1-5 above are complete), follow these steps in your **new Git Bash window**.
+Once your environment is configured, follow these steps in your **Git Bash window**.
 
 1.  **Clone the Repository:**
     *   Navigate to the folder where you want your project to live (e.g., your Documents folder).
@@ -79,10 +51,10 @@ Once your environment is configured (Steps 1-5 above are complete), follow these
     cd build
     ```
 
-3.  **Configure the Project:**
-    *   This step tells CMake how to build the project. It automatically detects your MinGW compiler settings.
+3.  **Configure the Project (Crucial Step for MinGW):**
+    *   This step tells CMake how to build the project and explicitly tells it to use the MinGW Makefiles generator, which is necessary when using MinGW outside of a dedicated IDE environment.
     ```bash
-    cmake .. 
+    cmake -G "MinGW Makefiles" .. 
     ```
 
 4.  **Build the Project:**
@@ -164,7 +136,7 @@ Follow these exact steps in order. **Do not skip any steps!**
 
 1.  Open the `practice-project` folder in VS Code.
 2.  Edit the file **`src/main.cpp`** and add the box and your name as specified in your assigned issue.
-3.  **Test your code!** Re-run the configuration and build steps (Part 1, Steps 3, 4, 5) to make sure the program runs correctly with your changes.
+3.  **Test your code!** Re-run the configuration and build steps (Part 1, Steps 3, 4, 5) to make sure the program runs correctly with your changes. *(Remember to navigate back into the `build` directory before running steps 3 and 4).*
 
 #### **Step 7: Commit and Push (In Git Bash)**
 
