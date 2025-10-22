@@ -7,10 +7,12 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(RAYLIB_VERSION 5.5)
 
+# --- 1. Dependency Acquisition (Find or Fetch) ---
 # Try to find raylib first
 find_package(raylib ${RAYLIB_VERSION} QUIET)
 
 if (NOT raylib_FOUND)
+    message(STATUS "raylib not found locally, fetching source via FetchContent.")
     include(FetchContent)
     FetchContent_Declare(
         raylib
@@ -24,5 +26,24 @@ if (NOT raylib_FOUND)
     endif()
 endif()
 
+# --- 2. Define Platform-Specific Linker Dependencies ---
+
+# Initialize a variable to hold extra required libraries
+set(PLATFORM_LIBS "")
+
+# If the target system is Windows (MSVC, MinGW, etc.)
+if (WIN32)
+    # On Windows, raylib needs explicit links to core system libraries
+    list(APPEND PLATFORM_LIBS opengl32 gdi32 winmm)
+    message(STATUS "Adding Windows dependencies: ${PLATFORM_LIBS}")
+endif()
+
+# --- 3. Build Executable and Link ---
+
 add_executable(RaylibPracticeProject src/main.cpp)
-target_link_libraries(RaylibPracticeProject PRIVATE raylib)
+
+# Link the core raylib library, followed by the platform-specific dependencies
+target_link_libraries(RaylibPracticeProject PRIVATE
+    raylib
+    ${PLATFORM_LIBS}
+)
