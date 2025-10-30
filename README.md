@@ -1,137 +1,100 @@
 # Practice Project: Mastering Git and GitHub Workflow
 
-Welcome to your first collaborative project! This simple C++ application uses the Raylib library and the CMake build system.
-
-The primary goal of this exercise is **not** the C++ code itself, but to master the professional development workflow: **Forking, Cloning, Branching, Committing, and creating Pull Requests (PRs).**
-
-Mastering this workflow now will ensure our main project runs smoothly and professionally.
+## Part 1: Initial Setup and Running the Project
 
 ---
 
-## Part 1: Initial Setup and Running the Project
-
-Before you write a single line of code, you must set up your development environment and successfully compile and run the base project.
+## 💻 Section 1A: Setup for Windows (MSVC)
 
 ### Prerequisites (What to Install on Windows)
 
 You need to install three essential tools. **Follow the instructions exactly.** We are using the **Microsoft Visual C++ (MSVC) compiler** because it provides the most stable environment for Raylib on Windows.
 
-1.  **Git Bash:** This provides the professional Linux-style terminal commands needed for all your Git operations.
-    *   **Installation:** Download and run the installer from [git-scm.com](https://git-scm.com/download/win). Use all the **default installation options**.
-    *   *Verification:* Open the **Git Bash** application and type `git --version`. Ensure a version number is displayed.
+1.  **Git Bash:** (Download from [git-scm.com](https://git-scm.com/download/win). Use all default options.)
+2.  **Visual Studio Build Tools (C++ Compiler - MSVC):** (Download Visual Studio Installer. **SELECT ONLY** the **"Desktop development with C++"** workload.)
+3.  **CMake:** (Download from [cmake.org/download](https://cmake.org/download/). **CRITICAL: Select "Add CMake to the system PATH."**)
 
-2.  **Visual Studio Build Tools (The C++ Compiler - MSVC):** This provides the compiler and necessary build tools.
-    *   **Installation:** Download the **Visual Studio Installer** from the official Microsoft site.
-    *   **CRUCIAL STEP:** When prompted for workloads, **SELECT ONLY** the **"Desktop development with C++"** workload. You do not need the full Visual Studio IDE.
-    *   *Verification:* After installation, search your Windows Start Menu for **"x64 Native Tools Command Prompt for VS..."** (The specific year may vary). Open it and type `cl`. It should show compiler information, indicating the environment is set up.
+### Build Steps: Running the Existing Code (Windows)
 
-3.  **CMake:** This tool manages the building of our C++ project across different environments.
-    *   **Installation:** Download the installer from [cmake.org/download](https://cmake.org/download/).
-    *   **CRUCIAL STEP:** When prompted about the PATH, select the option: **"Add CMake to the system PATH for all users."**
-    *   *Verification:* Open **Git Bash** and type `cmake --version`. Ensure a version number is displayed.
+We use the **x64 Native Tools Command Prompt** for building, as it contains the necessary path variables for the MSVC compiler.
 
-### VS Code and CMake Tools Setup (The Primary Development Environment)
-
-1.  **Install VS Code:** If you don't have it, download and install Visual Studio Code.
-2.  **Install the CMake Tools Extension:**
-    *   In VS Code, go to the Extensions view (`Ctrl+Shift+X`).
-    *   Search for and install **"CMake Tools"** by Microsoft.
-
----
-
-### Build Steps: Running the Existing Code
-
-We will use two different terminal environments for these initial steps:
-
-1.  **Git Bash:** For all version control (Git) operations.
-2.  **x64 Native Tools Command Prompt:** For initial configuration (because it is pre-configured to find the MSVC compiler).
-
-#### Step 1: Clone the Repository (Use Git Bash)
-
-1.  Open **Git Bash**.
-2.  Navigate to the directory where you want your project stored (e.g., your Documents folder).
-    ```bash
-    cd ~/Documents 
-    ```
-3.  Clone the project repository:
-    ```bash
-    # This creates the 'practice-project' folder
-    git clone https://github.com/lst-cpp-project-2025-2026/practice-project.git
-    cd practice-project # Move into the new project folder
-    ```
-
-#### Step 2: Configure and Build (Use the Native Tools Command Prompt)
-
-1.  Search your Windows Start Menu for and open the **"x64 Native Tools Command Prompt for VS..."**
-2.  Navigate to the project folder you just cloned:
+1.  **Clone Repository (Use Git Bash - See Step 1, Part 2)**
+2.  Open the **"x64 Native Tools Command Prompt for VS..."**
+3.  Navigate to your project folder:
     ```batch
     cd C:\Users\YourName\Documents\practice-project 
     ```
-3.  Create the separate build directory:
+4.  Configure and Build:
     ```batch
     mkdir build
     cd build
-    ```
-4.  **Configure CMake:** This generates the build files needed by the compiler.
-    ```batch
     cmake .. 
-    ```
-5.  **Build the Project:** This compiles the source code.
-    ```batch
     cmake --build .
     ```
-6.  **Run the Application:**
+5.  Run the Application:
     ```batch
     .\Debug\RaylibPracticeProject.exe 
     ```
-    *   A small, Raylib window should appear. **Success!**
+
+### VS Code and CMake Tools Setup (Windows)
+
+*   **Install VS Code** and the **CMake Tools** extension.
+*   **Crucial Kit Selection:** In VS Code, when prompted or via the status bar, ensure you select the **MSVC kit** (e.g., `Visual Studio Community 2022 Release - amd64`). **DO NOT** select MinGW or GCC.
 
 ---
 
-### Step 3: Configuring CMake Tools in VS Code
+## 🐧 Section 1B: Setup for Ubuntu / Debian Linux (GCC)
 
-We must ensure VS Code uses the **Microsoft Visual C++ (MSVC) compiler** for Raylib compatibility.
+For Linux systems, the process is streamlined using the built-in package manager (`apt`).
 
-#### Scenario A: First-Time Setup (Recommended)
+### Prerequisites (What to Install on Ubuntu)
 
-1.  Open VS Code and choose **File > Open Folder**. Select the `practice-project` folder.
-2.  **Select the Compiler Kit:** The CMake Tools extension should detect your environment. Look at the VS Code status bar (the blue bar at the bottom).
-3.  Click the item that says **"[No active kit]"** or a detected compiler name.
-4.  **CRITICALLY, you must select the MSVC kit.** Choose the option that includes **"Visual Studio Community"**, **"Visual Studio Build Tools"**, or **"MSVC"** for the **x64 architecture** (e.g., `Visual Studio Community 2022 Release - amd64`).
+You must install the necessary compilers and Raylib system dependencies.
 
-    ***DO NOT select any kit labeled "MinGW" or "GCC" if it appears.***
+1.  **Install Essential Build Tools:** This includes the standard C++ compiler (G++) and `make`.
+    ```bash
+    sudo apt update
+    sudo apt install build-essential git cmake
+    ```
 
----
+2.  **Install Raylib Dependencies:** Raylib requires libraries for graphics (OpenGL), windowing (X11), and audio (ALSA).
+    ```bash
+    sudo apt install libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev
+    ```
+    *(Note: This comprehensive list ensures compatibility across most desktop environments.)*
 
-#### Scenario B: Troubleshooting - Switching from MinGW/GCC
+### Build Steps: Running the Existing Code (Ubuntu)
 
-If you previously used VS Code for C++ and CMake Tools automatically selected a different compiler (like MinGW), you must manually force the switch to MSVC.
+Use your standard terminal (e.g., Gnome Terminal, Konsole, or Git Bash if installed on Linux).
 
-1.  **Delete the Cache:** Close VS Code. In your file explorer or Git Bash, delete the entire `build` folder inside your `practice-project` directory. This forces CMake to re-configure cleanly.
-2.  **Open VS Code.** The extension will notice the missing configuration.
-3.  **Access the Kit Selection:** Click the item in the VS Code status bar that shows the incorrect compiler (e.g., `MinGW`).
-4.  **Force Select MSVC:**
-    *   Scroll through the list and **explicitly select the MSVC kit** (e.g., `Visual Studio Community 2022 Release - amd64`).
-    *   If you still don't see the correct MSVC kit, click **"[Scan for Kits]"** at the top of the selection menu and then try selecting again.
-5.  **Configure and Build:** Once MSVC is selected, CMake Tools will automatically Configure the project. Click the **Build** button in the status bar to verify the new compiler works.
+1.  **Clone Repository (See Step 1, Part 2)**
+2.  Navigate to the project folder:
+    ```bash
+    cd ~/Documents/practice-project 
+    ```
+3.  Configure and Build:
+    ```bash
+    mkdir build
+    cd build
+    cmake .. 
+    cmake --build .
+    ```
+4.  Run the Application:
+    ```bash
+    ./RaylibPracticeProject
+    ```
+    *A small Raylib window should appear. Success!*
 
----
+### VS Code and CMake Tools Setup (Ubuntu)
 
-#### Using VS Code for Development (The Standard Workflow)
-
-Once the correct MSVC kit is active, you can use the status bar at the bottom of VS Code:
-
-| Status Bar Element | Action | Purpose |
-| :--- | :--- | :--- |
-| **[Build]** | Click **Build** | Compiles your current changes. |
-| **[RaylibPracticeProject]** | Click the **Play button** next to the target name. | Runs the compiled executable. |
-| **[x64-Debug]** | Click this to change the configuration. | Should usually be set to `Debug`. |
+*   **Install VS Code** and the **CMake Tools** extension.
+*   **Crucial Kit Selection:** In VS Code, when prompted or via the status bar, ensure you select a **GCC kit** (e.g., `GCC 11.4.0` or similar). **DO NOT** select any Visual Studio or MSVC kit.
 
 ---
 
 ## Part 2: The Contribution Workflow (Your Task)
 
-This section details the professional Git/GitHub workflow for accepting a task, coding it, and submitting it for review.
+This workflow is identical regardless of your operating system (Windows or Ubuntu), as it relies purely on Git commands and GitHub interactions.
 
 ### Your Task
 
@@ -143,36 +106,30 @@ Follow these exact steps in order. **Do not skip any steps!**
 
 #### **Step 1: Get the Assignment (On GitHub)**
 
-1.  Go to the **Issues** tab on the original repository on GitHub.
-2.  Find an open issue assigned for you (e.g., "Add the name box for [Your Name]"). Note the **Issue Number (e.g., #1, #2)**.
-3.  **Comment on the issue:** Write "I'd like to take this!" to officially claim it.
-4.  Wait for the group lead (`bilal-houari`) to assign the issue to you.
+1.  Go to the **Issues** tab on the original repository.
+2.  Find and claim an open issue (e.g., "Add the name box for [Your Name]"). Note the **Issue Number (e.g., #1, #2)**.
+3.  Comment: "I'd like to take this!" and wait for the assignment.
 
 #### **Step 2: Fork the Repository (On GitHub)**
 
-1.  Go to the main repository page on GitHub.
-2.  Click the **Fork** button (usually in the top right).
-3.  This creates a personal, independent copy of the project under your own GitHub account. **We always work from our personal fork.**
+1.  Go to the main repository page.
+2.  Click the **Fork** button to create your personal copy.
 
-#### **Step 3: Clone Your Fork Locally (In Git Bash)**
+#### **Step 3: Clone Your Fork Locally (In Git Bash / Linux Terminal)**
 
-***If you completed Part 1, you must delete the original `practice-project` folder and its `build` folder now, as we need to clone your personal fork.***
+***If you already cloned the original repository for testing (Part 1), delete the old `practice-project` folder now.***
 
-1.  Go to **your personal fork** on GitHub (your URL will look like `github.com/YourUsername/practice-project`).
-2.  Click the **Code** button and copy the HTTPS URL for your fork.
-3.  In **Git Bash**, clone your fork (if you deleted the old one):
+1.  Go to **your personal fork** on GitHub. Copy the HTTPS URL.
+2.  In your terminal (Git Bash or Linux Terminal), clone your fork:
     ```bash
-    # This downloads YOUR copy of the repository
     git clone <your-fork-url>
     cd practice-project
     ```
-4.  **Re-configure the Build:** Since you cloned a fresh copy, you must re-run the configuration steps (Part 1, Step 2) using the **x64 Native Tools Command Prompt** once, or configure entirely using VS Code (Part 1, Step 3).
+3.  **Re-Configure the Build:** Since you cloned a fresh copy, you must re-run the configuration and build steps (Section 1A or 1B, Step 3 & 4) before editing code.
 
-#### **Step 4: Link to Upstream (The Original Repo) (In Git Bash)**
+#### **Step 4: Link to Upstream (The Original Repo) (In Terminal)**
 
-*The **upstream** link allows you to pull updates from the original project into your fork, keeping your work synchronized with the team.*
-
-1.  While still in the project directory in Git Bash, add a link called `upstream`:
+1.  While in the project directory, add a link called `upstream`:
     ```bash
     git remote add upstream https://github.com/lst-cpp-project-2025-2026/practice-project.git
     ```
@@ -182,7 +139,7 @@ Follow these exact steps in order. **Do not skip any steps!**
     # You should see 'origin' (your fork) and 'upstream' (the main repo)
     ```
 
-#### **Step 5: Create a Feature Branch (In Git Bash)**
+#### **Step 5: Create a Feature Branch (In Terminal)**
 
 *We never work directly on the `master` branch! A feature branch isolates your work for review.*
 
@@ -192,47 +149,47 @@ Follow these exact steps in order. **Do not skip any steps!**
     git pull upstream master          # Pull any recent changes from the original repo
     git push origin master            # Update your fork's master branch
     ```
-2.  Create and switch to your new branch. **Use a clear, descriptive name (e.g., matching your issue):**
+2.  Create and switch to your new branch. **This name MUST clearly describe the feature you are implementing.**
+    
+    *   **Convention:** Use the format `type/description` (e.g., `feature/add-initial-box` or `fix/update-text-color`).
+    
     ```bash
-    # Replace 'your-name' with your actual name
-    git checkout -b feature/add-your-name 
+    # Example using a descriptive branch name related to the task:
+    git checkout -b feature/add-your-name-box 
     ```
 
 #### **Step 6: Code the Feature (In VS Code)**
 
-1.  In **VS Code**, edit the file **`src/main.cpp`** and add the box and your name as specified in your assigned issue.
+1.  In VS Code, edit the file **`src/main.cpp`** and add the box and your name.
+2.  Use the VS Code status bar **Build** and **Run** buttons to test your changes instantly.
 
-2.  **Test your code repeatedly using CMake Tools!**
-    *   Use the **Build** and **Run** buttons in the VS Code status bar to test your changes instantly.
+#### **Step 7: Commit and Push Your Changes (In Terminal)**
 
-#### **Step 7: Commit and Push Your Changes (In Git Bash)**
-
-1.  Go back to **Git Bash**. Stage the files you modified:
+1.  Stage the files you modified:
     ```bash
     git add src/main.cpp 
     ```
-2.  "Commit" your changes (save them locally with a descriptive message):
+2.  Commit your changes. **CRITICAL: Use a clear, conventional message, and reference the issue number (XX):**
     ```bash
-    # CRITICAL: Use a clear message, and always reference the issue number (XX)!
-    git commit -m "feat: Add box for [Your Name] and closes #XX" 
+    # Example commit message:
+    git commit -m "feat: Add box displaying [Your Name] and closes #XX" 
     ```
-3.  "Push" your new branch to your personal fork on GitHub:
+3.  Push your new branch to your personal fork on GitHub:
     ```bash
-    git push origin feature/add-your-name
+    git push origin feature/add-your-name-box
     ```
 
 #### **Step 8: Create the Pull Request (PR) (On GitHub)**
 
 1.  Go to the GitHub page for **your fork**.
-2.  GitHub will notice you just pushed a new branch and prompt you to click **"Compare & pull request."**
+2.  Click **"Compare & pull request."**
 3.  **Verify the Direction (VERY IMPORTANT!):**
-    *   **base repository:** `lst-cpp-project-2025-2026/practice-project` (The original project)
-    *   **head repository:** `YourUsername/practice-project` (Your fork/feature branch)
-4.  Write a brief description and ensure your title is clear (e.g., "Add feature for [Your Name] - Closes #XX").
+    *   **base repository:** `lst-cpp-project-2025-2026/practice-project` (The main repo)
+    *   **head repository:** `YourUsername/practice-project` (Your branch)
+4.  Write a brief description and ensure your title is clear (e.g., "Feature: Add Name Box - Closes #XX").
 5.  Click **"Create pull request."**
 
 #### **Step 9: Review and Merge**
 
-1.  The group lead (`bilal-houari`) will review your code.
-2.  If changes are requested, repeat Step 6 (code), Step 7 (commit and push to the *same branch*), and the PR will automatically update!
-3.  Once approved, the changes will be merged into the main project! **You have successfully completed the workflow!**
+1.  If changes are requested, repeat Step 6 (code), Step 7 (commit and push to the *same branch*), and the PR will automatically update.
+2.  Once approved, the changes will be merged into the main project.
