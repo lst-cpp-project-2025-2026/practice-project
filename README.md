@@ -4,7 +4,7 @@
 
 ---
 
-## 💻 Section 1A: Setup for Windows (MSVC)
+## Section 1A: Setup for Windows (MSVC)
 
 ### Prerequisites (What to Install on Windows)
 
@@ -43,7 +43,7 @@ We use the **x64 Native Tools Command Prompt** for building, as it contains the 
 
 ---
 
-## 🐧 Section 1B: Setup for Ubuntu / Debian Linux (GCC)
+## Section 1B: Setup for Ubuntu / Debian Linux (GCC)
 
 For Linux systems, the process is streamlined using the built-in package manager (`apt`).
 
