@@ -55,6 +55,13 @@ int main(void) {
       .text = "Bilal",
       .fontSize = 18,
       .textColor = DARKGRAY};
+  Box AdilBox = {
+      .rect = {180, 60, 150, 100},
+      .outlineColor = DARKGRAY,
+      .fillColor = RAYWHITE, 
+      .text = "Adil",
+      .fontSize = 18,
+      .textColor = DARKGRAY};
 
   while (!WindowShouldClose()) {
     // Calculate header position
@@ -70,6 +77,7 @@ int main(void) {
 
     // Draw the modular box
     DrawHollowBox(BilalBox);
+    DrawHollowBox(AdilBox);
 
     EndDrawing();
   }
